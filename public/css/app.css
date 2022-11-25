@@ -1,0 +1,14 @@
+.off-canvas {
+    z-index: 12;
+}
+.margo {
+    padding: 20px;
+}
+.gomb {
+    color: white !important;
+}
+.nagykep{
+    display: block;
+    max-width: 100%;
+    padding: 20px;
+}
