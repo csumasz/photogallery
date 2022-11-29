@@ -22,7 +22,7 @@
             {!! Form::open(['action' => 'PhotoController@store', 'enctype' => 'multipart/form-data']) !!}
 
             {!! Form::label('cim', 'Cím') !!}
-            {!! Form::text('cim', $value=null, $attributes=['placehoder' => 'fotó címe', 'name' => 'cim']) !!}
+            {!! Form::text('cim', $value=null, $attributes=['placehoder' => 'Fotó címe', 'name' => 'cim']) !!}
 
             {!! Form::label('leiras', 'Leírás') !!}
             {!! Form::text('leiras', $value=null, $attributes=['placehoder' => 'Fotó leírása', 'name' => 'leiras'])

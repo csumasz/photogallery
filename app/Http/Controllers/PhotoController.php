@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;//Use database
+use Auth;
 
 class PhotoController extends Controller
 {
     private $photo_tabla = 'photos';
 
-    public function create(Request $gallery_id){
-        return view('photo/create', compact('gallery_id'));
+    public function create($gallery_id){
+        if(!Auth::check()){//Ha nem igazat ad vissza a bejelentekezztés vizsgálata
+            return \Redirect::route('gallery.index')->with('uzenet', 'Csak bejelentkezett felhasználó tölthet fel új fotót!');
+        }else{
+        return view('photo/create', compact('gallery_id'));}
     }
 
     public function store(Request $request){
@@ -32,20 +36,20 @@ class PhotoController extends Controller
                 [
                     'title' => $cim,
                     'description' => $leiras,
-                    'location' => $helyszin,
+                    'location' => $helyszin or null,//ha nincs kitöltve 0-at kap
                     'image' => $fajlnev,
                     'gallery_id' => $galeria,
                     'owner_id' => $tulajdonos
                 ]
                 );
             //back to home page and write message
-            return \Redirect::route('gallery.show', array('id'=>$galeria))->with('uzenet', 'A fotót sikeresen feltöltötted!');//location to home page
+            return \Redirect::route('gallery.show', $galeria)->with('uzenet', 'A fotót sikeresen feltöltötted!');//location to home page
         
         }
 
         else{
             //die('hiba');
-            return \Redirect::route('gallery.show', array('id'=>$galeria))->with('uzenet', 'A fotó feltöltése nem sikerült!');//location to home page
+            return \Redirect::route('gallery.show', $galeria)->with('uzenet', 'A fotó feltöltése nem sikerült!');//location to home page
 
         }
 

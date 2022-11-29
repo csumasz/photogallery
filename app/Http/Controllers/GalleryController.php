@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;//Use database
+use Illuminate\Support\Facades\DB;
+use Auth;
+//use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class GalleryController extends Controller
 {
@@ -16,7 +18,10 @@ class GalleryController extends Controller
     }
 
     public function create(Request $gallery_id){
-        return view('gallery/create', compact('gallery_id'));
+        if(!Auth::check()){//Ha nem igazat ad vissza a bejelentekezztés vizsgálata
+            return \Redirect::route('gallery.index')->with('uzenet', 'Csak bejelentkezett felhasználó hozhat létre új képgalériát!');
+        }else{
+        return view('gallery/create', compact('gallery_id'));}
     }
 
     public function store(Request $request){
@@ -49,7 +54,6 @@ class GalleryController extends Controller
         return \Redirect::route('gallery.index')->with('uzenet', 'A képgalériát sikeresen létrehoztad!');//location to home page
     }
 
-    //TODO:Route not 
     public function show($id){
         $gallery = DB::table($this->galeria_tabla)->where('id',$id)->first();
         $photos = DB::table($this->photo_tabla)->where('gallery_id',$id)->get();

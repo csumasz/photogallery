@@ -22,10 +22,14 @@
           <div class="callout primary">
             <div class="row column">
                 <a href="/">Vissza</a>  
-                <h1>Galéria</h1>
-                <p class="lead">Képgaléria</p>
-                <a class="button gomb" href="/photo/create/">Új fotó feltöltése</a>
-            </div>
+                <h1>{{$gallery->name}}</h1>
+                <p class="lead">{{$gallery->description}}</p>
+                <?php
+                if(Auth::check()){//Bejelentkezettséghez kötött láthatóság
+                ?>
+                   <a class="button gomb" href="/photo/create/{{$gallery->id}}">Új fotó feltöltése</a>
+                <?php }?>
+              </div>
           </div>
           <div class="row small-up-2 medium-up-3 large-up-4">
             <?php
